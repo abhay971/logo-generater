@@ -116,6 +116,7 @@ const Icon = ({ name, color, size, rotate }) => {
     }, [downloadIcon]);
   
     const downloadPngLogo = () => {
+<<<<<<< HEAD
       const downlaodLogoDiv = document.getElementById('downlaodLogoDiv');
   
       html2canvas(downlaodLogoDiv, {
@@ -136,6 +137,39 @@ const Icon = ({ name, color, size, rotate }) => {
           style={{
             padding: storageValue?.bgPadding,
           }}
+=======
+        const downlaodLogoDiv = document.getElementById('downlaodLogoDiv');
+
+        html2canvas(downlaodLogoDiv,{
+            backgroundColor: null
+        }).then(canvas => {
+            const pngImage = canvas.toDataURL('image/png');
+            const downloadLink = document.createElement('a');
+            downloadLink.href = pngImage;
+            downloadLink.download = 'Logo.png';
+            downloadLink.click();
+        })
+    }
+
+    const Icon = ({name, color, size, rotate}) => {
+        const LucidIcon = icons[name];
+        if(!LucidIcon){
+            return;
+        }
+        return <LucidIcon color={color} size={size} 
+        style={{
+            transform:`rotate(${rotate}deg)`
+        }}
+        />
+    }
+
+  return (
+    <div className='flex items-center justify-center h-screen'>
+        <div className='h-[500px] w-[500px] bg-gray-200 outline-dotted outline-gray-300'
+        style={{
+            padding:storageValue?.bgPadding,
+        }}
+>>>>>>> 4dd82805ed4245ce912deb8e0f1b9e4798df712b
         >
           <div
             id='downlaodLogoDiv'
@@ -164,9 +198,17 @@ const Icon = ({ name, color, size, rotate }) => {
             )}
           </div>
         </div>
+<<<<<<< HEAD
       </div>
     );
   }
   
   export default LogoPreview;
   
+=======
+    </div>
+  )
+}
+
+export default LogoPreview
+>>>>>>> 4dd82805ed4245ce912deb8e0f1b9e4798df712b
