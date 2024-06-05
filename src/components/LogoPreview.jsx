@@ -30,7 +30,7 @@ function LogoPreview({downloadIcon}) {
             const pngImage = canvas.toDataURL('image/png');
             const downloadLink = document.createElement('a');
             downloadLink.href = pngImage;
-            downloadLink.download = 'Abhays_Log.png';
+            downloadLink.download = 'Logo.png';
             downloadLink.click();
         })
     }
