@@ -85,130 +85,88 @@ const  BASE_URL = 'https://logoexpress.tubeguruji.com'
 // export default LogoPreview
 
 const Icon = ({ name, color, size, rotate }) => {
-    const LucidIcon = icons[name];
-    if (!LucidIcon) {
-      return null;
+  const LucidIcon = icons[name];
+  if (!LucidIcon) {
+    return null;
+  }
+  return (
+    <LucidIcon
+      color={color}
+      size={size}
+      style={{
+        transform: `rotate(${rotate}deg)`,
+      }}
+    />
+  );
+};
+
+function LogoPreview({ downloadIcon }) {
+  const [storageValue, setStorageValue] = useState();
+  const { updateStorage, setUpdateStorage } = useContext(UpdateStorageContext);
+
+  useEffect(() => {
+    const storageData = JSON.parse(localStorage.getItem('value'));
+    setStorageValue(storageData);
+  }, [updateStorage]);
+
+  useEffect(() => {
+    if (downloadIcon) {
+      downloadPngLogo();
     }
-    return (
-      <LucidIcon
-        color={color}
-        size={size}
-        style={{
-          transform: `rotate(${rotate}deg)`,
-        }}
-      />
-    );
+  }, [downloadIcon]);
+
+  const downloadPngLogo = () => {
+    const downlaodLogoDiv = document.getElementById('downlaodLogoDiv');
+
+    html2canvas(downlaodLogoDiv, {
+      backgroundColor: null,
+    }).then((canvas) => {
+      const pngImage = canvas.toDataURL('image/png');
+      const downloadLink = document.createElement('a');
+      downloadLink.href = pngImage;
+      downloadLink.download = 'Logo.png';
+      downloadLink.click();
+    });
   };
-  
-  function LogoPreview({ downloadIcon }) {
-    const [storageValue, setStorageValue] = useState();
-    const { updateStorage, setUpdateStorage } = useContext(UpdateStorageContext);
-  
-    useEffect(() => {
-      const storageData = JSON.parse(localStorage.getItem('value'));
-      setStorageValue(storageData);
-    }, [updateStorage]);
-  
-    useEffect(() => {
-      if (downloadIcon) {
-        downloadPngLogo();
-      }
-    }, [downloadIcon]);
-  
-    const downloadPngLogo = () => {
-<<<<<<< HEAD
-      const downlaodLogoDiv = document.getElementById('downlaodLogoDiv');
-  
-      html2canvas(downlaodLogoDiv, {
-        backgroundColor: null,
-      }).then((canvas) => {
-        const pngImage = canvas.toDataURL('image/png');
-        const downloadLink = document.createElement('a');
-        downloadLink.href = pngImage;
-        downloadLink.download = 'Logo.png';
-        downloadLink.click();
-      });
-    };
-  
-    return (
-      <div className='flex items-center justify-center h-screen'>
-        <div
-          className='h-[500px] w-[500px] bg-gray-200 outline-dotted outline-gray-300'
-          style={{
-            padding: storageValue?.bgPadding,
-          }}
-=======
-        const downlaodLogoDiv = document.getElementById('downlaodLogoDiv');
-
-        html2canvas(downlaodLogoDiv,{
-            backgroundColor: null
-        }).then(canvas => {
-            const pngImage = canvas.toDataURL('image/png');
-            const downloadLink = document.createElement('a');
-            downloadLink.href = pngImage;
-            downloadLink.download = 'Logo.png';
-            downloadLink.click();
-        })
-    }
-
-    const Icon = ({name, color, size, rotate}) => {
-        const LucidIcon = icons[name];
-        if(!LucidIcon){
-            return;
-        }
-        return <LucidIcon color={color} size={size} 
-        style={{
-            transform:`rotate(${rotate}deg)`
-        }}
-        />
-    }
 
   return (
     <div className='flex items-center justify-center h-screen'>
-        <div className='h-[500px] w-[500px] bg-gray-200 outline-dotted outline-gray-300'
+      <div
+        className='h-[500px] w-[500px] bg-gray-200 outline-dotted outline-gray-300'
         style={{
-            padding:storageValue?.bgPadding,
+          padding: storageValue?.bgPadding,
         }}
->>>>>>> 4dd82805ed4245ce912deb8e0f1b9e4798df712b
+      >
+        <div
+          id='downlaodLogoDiv'
+          className='h-full w-full flex items-center justify-center'
+          style={{
+            borderRadius: storageValue?.bgRounded,
+            background: storageValue?.bgColor,
+          }}
         >
-          <div
-            id='downlaodLogoDiv'
-            className='h-full w-full flex items-center justify-center'
-            style={{
-              borderRadius: storageValue?.bgRounded,
-              background: storageValue?.bgColor,
-            }}
-          >
-            {storageValue?.icon?.includes('.png') ? (
-              <img
-                src={`/png/${storageValue?.icon}`}
-                alt='Icon'
-                style={{
-                  height: storageValue?.iconSize,
-                  width: storageValue?.iconSize,
-                }}
-              />
-            ) : (
-              <Icon
-                name={storageValue?.icon}
-                color={storageValue?.iconColor}
-                size={storageValue?.iconSize}
-                rotate={storageValue?.iconRotate}
-              />
-            )}
-          </div>
+          {storageValue?.icon?.includes('.png') ? (
+            <img
+              src={`/png/${storageValue?.icon}`}
+              alt='Icon'
+              style={{
+                height: storageValue?.iconSize,
+                width: storageValue?.iconSize,
+              }}
+            />
+          ) : (
+            <Icon
+              name={storageValue?.icon}
+              color={storageValue?.iconColor}
+              size={storageValue?.iconSize}
+              rotate={storageValue?.iconRotate}
+            />
+          )}
         </div>
-<<<<<<< HEAD
       </div>
-    );
-  }
-  
-  export default LogoPreview;
-  
-=======
     </div>
-  )
+  );
 }
 
-export default LogoPreview
->>>>>>> 4dd82805ed4245ce912deb8e0f1b9e4798df712b
+export default LogoPreview;
+
